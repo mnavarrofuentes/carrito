@@ -88,10 +88,8 @@
         border-radius: 4px;
         cursor: move;
       }
-      .cart-button {
-        position: fixed;
-        top: 20px;
-        right: 20px;
+      .cart-button,
+      .add-to-cart-button {
         background-color: #ff6600;
         color: white;
         padding: 12px 24px;
@@ -99,9 +97,17 @@
         border-radius: 5px;
         font-weight: bold;
         transition: background-color 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+      .cart-button {
+        position: fixed;
+        top: 20px;
+        right: 20px;
         z-index: 1000;
       }
-      .cart-button:hover {
+      .cart-button:hover,
+      .add-to-cart-button:hover {
         background-color: #e65c00;
       }
       #cart {
@@ -214,6 +220,7 @@
             fútbol de grado torneo.
           </p>
           <p>Precio: Q60</p>
+          <button class="add-to-cart-button">Añadir al Carrito</button>
         </div>
         <div
           class="product-item"
@@ -228,6 +235,7 @@
           />
           <p>Domina la cancha con nuestra raqueta de tenis ligera y potente.</p>
           <p>Precio: Q200</p>
+          <button class="add-to-cart-button">Añadir al Carrito</button>
         </div>
         <div
           class="product-item"
@@ -245,6 +253,7 @@
             ergonómicas y receptivas.
           </p>
           <p>Precio: Q130</p>
+          <button class="add-to-cart-button">Añadir al Carrito</button>
         </div>
         <div
           class="product-item"
@@ -259,6 +268,7 @@
           />
           <p>Logra tu mejor marca personal con nuestro casco.</p>
           <p>Precio: Q150</p>
+          <button class="add-to-cart-button">Añadir al Carrito</button>
         </div>
         <div
           class="product-item"
@@ -275,6 +285,7 @@
             Logra tu mejor marca personal con nuestras zapatillas de futbol.
           </p>
           <p>Precio: Q500</p>
+          <button class="add-to-cart-button">Añadir al Carrito</button>
         </div>
         <div
           class="product-item"
@@ -292,6 +303,7 @@
             receptivas.
           </p>
           <p>Precio: Q110</p>
+          <button class="add-to-cart-button">Añadir al Carrito</button>
         </div>
       </section>
 
@@ -375,6 +387,14 @@
         e.preventDefault();
         const productName = e.dataTransfer.getData("text");
         addToCart(productName);
+      });
+
+      document.querySelectorAll(".add-to-cart-button").forEach((button) => {
+        button.addEventListener("click", (e) => {
+          const productItem = e.target.closest(".product-item");
+          const productName = productItem.dataset.name;
+          addToCart(productName);
+        });
       });
 
       function addToCart(productName) {
@@ -509,7 +529,6 @@
         updateCart();
       });
 
-      // Geolocation
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
           function (position) {
